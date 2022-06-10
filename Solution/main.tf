@@ -43,5 +43,11 @@ module "LogAnalitycs" {
             publisher = "Microsoft",
             product = "OMSGallery/AzureActivity",
         },
+
+        {
+            solution_name = "AzureActivity_2",
+            publisher = "Microsoft",
+            product = "OMSGallery/AzureActivity",
+        },
     ]
 }
