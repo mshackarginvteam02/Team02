@@ -1,17 +1,19 @@
 //Backend Example.
 terraform {
-  backend "azurerm" {
-    resource_group_name  = "Hack"
-    storage_account_name = "hackterraform"
-    container_name       = "tfstate"
-    key                  = "prod.terraform.tfstate"
-  }
   required_providers {
     azurerm = {
       version = "~> 2.19"
     }
   }
+  backend "azurerm" {
+    storage_account_name = "hack"
+    resource_group_name = "Hack"
+    container_name = "tfstate"
+    key = "prodterraform.tfstate"
+    access_key = "snVh+5xM4ZJ1Qmh6hrRlZo3t9oTJSPvIE0h8PHfUqwSGttZaW6rOJv4ghbA59WTHWzCoM671ncmD+AStw7ghQw=="
+  }
 }
+
 
 //Provider example
 provider "azurerm" {
@@ -30,11 +32,11 @@ module "LogAnalitycs" {
   source                = "./Modules/LogAnalitycs"
   name                  = "mshack"
   depends_on            = [module.RGroups] // Dependencia Explicita.
-  resource_group_name   = join("," , module.RGroups.name[*].RGEU2001.name) // Dependencia implicita
-  location              = join("," , module.RGroups.name[*].RGEU2001.location) // Dependencia implicita
-  sku                   = "Free"
-  retention_in_days     = 7
-  tags = merge(local.common_tags, local.extra_tags)
+  resource_group_name   = module.RGroups.name
+  location              = module.RGroups.location
+  sku                   = "PERGB2018"
+  retention_in_days     = "30"
+ // tags = merge(local.common_tags, local.extra_tags)
   solutions = [
         {
             solution_name = "AzureActivity",
